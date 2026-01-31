@@ -3,984 +3,642 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Is This Safe to Click?</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+    <title>Findo - Your Best Bet</title>
     <style>
-        :root {
-            --bg-primary: #0a0e27;
-            --bg-secondary: #151b3d;
-            --accent-safe: #10b981;
-            --accent-warning: #f59e0b;
-            --accent-danger: #ef4444;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --border-color: #1e293b;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #FFFEF7;
+            color: #1A1A1A;
         }
-
-        /* Animated background gradient */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%);
-            animation: gradientShift 20s ease infinite;
-            z-index: 0;
-        }
-
-        @keyframes gradientShift {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(-10%, 10%) rotate(180deg); }
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-            animation: fadeInDown 0.8s ease;
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        h1 {
-            font-family: 'Space Mono', monospace;
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, #10b981, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.02em;
-        }
-
-        .subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .main-card {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-            animation: fadeInUp 0.8s ease 0.2s backwards;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 1.5rem;
-        }
-
-        label {
-            display: block;
-            font-weight: 500;
-            margin-bottom: 0.75rem;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 1rem 1.25rem;
-            background: var(--bg-primary);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            font-family: 'DM Sans', sans-serif;
-            transition: all 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        input[type="text"]::placeholder {
-            color: #475569;
-        }
-
-        .check-button {
-            width: 100%;
-            padding: 1.25rem;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            font-family: 'DM Sans', sans-serif;
-        }
-
-        .check-button::before {
-            content: '';
-            position: absolute;
+        
+        .header {
+            background: white;
+            padding: 1.5rem 2rem;
+            border-bottom: 2px solid #E8E8E8;
+            position: sticky;
             top: 0;
-            left: -100%;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #8B1818;
+            cursor: pointer;
+        }
+        
+        .nav-btns {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .btn-primary {
+            background: #8B1818;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #6B0F0F;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #8B1818;
+            color: #8B1818;
+        }
+        
+        .btn-outline:hover {
+            background: #8B1818;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            border: 2px solid #E8E8E8;
+            overflow: hidden;
+            transition: 0.2s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            background: #F5F5F5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+        }
+        
+        .product-image img {
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
+            object-fit: cover;
         }
-
-        .check-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
-        }
-
-        .check-button:hover::before {
-            left: 100%;
-        }
-
-        .check-button:active {
-            transform: translateY(0);
-        }
-
-        .check-button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .result-container {
-            margin-top: 2rem;
-            opacity: 0;
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        .result-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 1.5rem;
-        }
-
-        .result-badge.safe {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--accent-safe);
-            border: 2px solid var(--accent-safe);
-        }
-
-        .result-badge.risky {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--accent-warning);
-            border: 2px solid var(--accent-warning);
-        }
-
-        .result-badge.dangerous {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--accent-danger);
-            border: 2px solid var(--accent-danger);
-        }
-
-        .result-icon {
-            width: 24px;
-            height: 24px;
-        }
-
-        .explanation {
-            background: var(--bg-primary);
+        
+        .product-info {
             padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            border-left: 4px solid;
         }
-
-        .explanation.safe { border-left-color: var(--accent-safe); }
-        .explanation.risky { border-left-color: var(--accent-warning); }
-        .explanation.dangerous { border-left-color: var(--accent-danger); }
-
-        .explanation p {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: var(--text-secondary);
+        
+        .product-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
         }
-
-        .checks-list {
-            list-style: none;
+        
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #8B1818;
+            margin: 1rem 0;
         }
-
-        .check-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--bg-primary);
-            border-radius: 10px;
-            margin-bottom: 0.75rem;
-            transition: transform 0.2s ease;
-        }
-
-        .check-item:hover {
-            transform: translateX(5px);
-        }
-
-        .check-icon {
-            flex-shrink: 0;
-            width: 20px;
-            height: 20px;
-        }
-
-        .check-label {
-            font-weight: 500;
-            color: var(--text-primary);
-            flex: 1;
-        }
-
-        .check-value {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .warning-box {
-            background: rgba(245, 158, 11, 0.1);
-            border: 1px solid var(--accent-warning);
-            padding: 1rem;
-            border-radius: 10px;
-            margin-top: 1rem;
-        }
-
-        .warning-box p {
-            color: var(--accent-warning);
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            color: var(--text-secondary);
+        
+        .product-stock {
+            color: #6B6B6B;
             font-size: 0.9rem;
-            margin-top: auto;
+            margin-bottom: 1rem;
         }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+        
+        .btn-buy {
+            width: 100%;
+            padding: 0.9rem;
+            background: #8B1818;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        
+        .btn-buy:hover {
+            background: #6B0F0F;
         }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
-
-            .main-card {
-                padding: 1.5rem;
-            }
+        
+        .btn-sold {
+            width: 100%;
+            padding: 1rem;
+            background: #06D6A0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        
+        .btn-delete {
+            width: 100%;
+            padding: 0.7rem;
+            background: #DC2626;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-close {
+            float: right;
+            font-size: 2rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #E8E8E8;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: #06D6A0;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            z-index: 2000;
+            display: none;
+        }
+        
+        .notification.show {
+            display: block;
+            animation: slideIn 0.3s;
+        }
+        
+        .notification.error {
+            background: #DC2626;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #6B6B6B;
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
         }
     </style>
 </head>
 <body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo" onclick="showPage('home')">FINDO</div>
+            <div class="nav-btns" id="navBtns">
+                <button class="btn btn-outline" onclick="showPage('mystore')">My Store</button>
+                <button class="btn btn-outline" onclick="showPage('account')">Account</button>
+                <button class="btn btn-primary" onclick="showSignup()">Sign Up / Login</button>
+            </div>
+        </div>
+    </header>
+
     <div class="container">
-        <header>
-            <h1>Is This Safe to Click?</h1>
-            <p class="subtitle" style="font-size: 1rem; margin-bottom: 0.5rem;">Smart Link Safety Checker</p>
-            <p class="subtitle">Analyze links for common scam patterns and security red flags.</p>
-            <div style="background: rgba(59, 130, 246, 0.15); border: 2px solid #3b82f6; border-radius: 12px; padding: 1.25rem; margin-top: 1.5rem; max-width: 650px; margin-left: auto; margin-right: auto;">
-                <p style="color: #60a5fa; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem;">
-                    ℹ️ How This Tool Works
-                </p>
-                <p style="color: #93c5fd; font-size: 0.9rem; line-height: 1.6; margin: 0;">
-                    This tool uses smart detection methods to check for common scam patterns, suspicious domains, and security issues. While it's designed to be helpful and catches many threats, <strong>it can make mistakes and isn't 100% accurate</strong>. New scams appear constantly, so always use good judgment and verify suspicious links through multiple sources.
-                </p>
+        <!-- Home Page -->
+        <div id="homePage" class="page active">
+            <h1 style="margin-bottom: 2rem;">All Products</h1>
+            <div class="products-grid" id="productsGrid">
+                <div class="empty-state">
+                    <div class="empty-icon">🏪</div>
+                    <h2>No Products Yet</h2>
+                    <p>Be the first to add a product!</p>
+                </div>
             </div>
-        </header>
+        </div>
 
-        <div class="main-card">
-            <div style="background: rgba(59, 130, 246, 0.1); border: 2px solid #3b82f6; border-radius: 12px; padding: 1rem; margin-bottom: 1.5rem;">
-                <label style="display: flex; align-items: start; gap: 0.75rem; cursor: pointer; color: var(--text-primary); text-transform: none; letter-spacing: normal; font-weight: 400;">
-                    <input type="checkbox" id="agree-checkbox" style="margin-top: 0.25rem; width: 18px; height: 18px; cursor: pointer; flex-shrink: 0;">
-                    <span style="font-size: 0.9rem; line-height: 1.5;">
-                        I understand this tool can make mistakes and isn't 100% accurate. I'll use good judgment and verify suspicious links through multiple sources.
-                    </span>
-                </label>
+        <!-- My Store Page -->
+        <div id="myStorePage" class="page">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 2rem;">
+                <h1>My Store</h1>
+                <button class="btn btn-primary" onclick="showAddProduct()">+ Add Product</button>
             </div>
-
-            <div class="input-group">
-                <label for="url-input">Paste the link here</label>
-                <input 
-                    type="text" 
-                    id="url-input" 
-                    placeholder="https://example.com/suspicious-link"
-                    autocomplete="off"
-                    disabled
-                >
+            <div class="products-grid" id="myProductsGrid">
+                <div class="empty-state">
+                    <p>Add your first product!</p>
+                </div>
             </div>
+        </div>
 
-            <button class="check-button" id="check-btn" onclick="checkLink()" disabled>
-                <span id="btn-text">Check This Link</span>
-                <span id="btn-loading" style="display: none;" class="loading"></span>
-            </button>
-
-            <div id="result" style="display: none;"></div>
+        <!-- Account Page -->
+        <div id="accountPage" class="page">
+            <h1>Your Account</h1>
+            <div style="margin-top: 2rem;">
+                <h2 id="userName">Welcome!</h2>
+                <p style="margin-top: 1rem;">Total Products: <strong id="userProducts">0</strong></p>
+                <button class="btn btn-delete" onclick="logout()" style="margin-top: 2rem;">Logout</button>
+            </div>
         </div>
     </div>
 
-    <div class="footer">
-        <p style="margin-bottom: 1rem; font-size: 1rem; font-weight: 700; color: var(--text-primary);">📋 Important Information</p>
-        <p style="margin-bottom: 0.75rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-            <strong>About Accuracy:</strong> This tool analyzes links for common scam patterns and security red flags. While it's helpful for identifying many threats, it can make mistakes and isn't 100% accurate. New scam techniques emerge constantly that may not be detected.
-        </p>
-        <p style="margin-bottom: 0.75rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-            <strong>Best Practices:</strong> Use this as one of several security measures. Always verify suspicious links through official channels, use updated antivirus software, and trust your instincts. If something feels off, don't click.
-        </p>
-        <p style="margin-bottom: 0.75rem; max-width: 800px; margin-left: auto; margin-right: auto;">
-            <strong>Disclaimer:</strong> This free tool is provided as-is without warranties. We're not liable for any issues arising from its use. By using this tool, you acknowledge it may have limitations and should be used alongside other security practices.
-        </p>
-        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary);">
-            Stay safe online! 🔒
-        </p>
+    <!-- Sign Up / Login Modal -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('authModal')">×</button>
+            <h2>Sign Up / Login</h2>
+            <form onsubmit="handleAuth(event)">
+                <div class="form-group">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-input" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" name="password" required minlength="6">
+                    <small style="color: #6B6B6B;">At least 6 characters</small>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Continue</button>
+            </form>
+        </div>
     </div>
 
+    <!-- Add Product Modal -->
+    <div class="modal" id="addProductModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('addProductModal')">×</button>
+            <h2>Add Product</h2>
+            <form onsubmit="handleAddProduct(event)">
+                <div class="form-group">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" class="form-input" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Price ($)</label>
+                    <input type="number" step="0.01" class="form-input" name="price" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Stock Quantity</label>
+                    <input type="number" class="form-input" name="stock" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select class="form-select" name="category" required>
+                        <option value="">Select...</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="clothing">Clothing</option>
+                        <option value="home">Home & Garden</option>
+                        <option value="sports">Sports & Outdoors</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Add Product</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
     <script>
-        async function checkLink() {
-            const input = document.getElementById('url-input');
-            const url = input.value.trim();
-            const resultDiv = document.getElementById('result');
-            const checkBtn = document.getElementById('check-btn');
-            const btnText = document.getElementById('btn-text');
-            const btnLoading = document.getElementById('btn-loading');
+        // State
+        let currentUser = null;
+        let allProducts = [];
 
-            if (!url) {
-                alert('Please enter a link to check');
-                return;
+        // Initialize
+        function init() {
+            const stored = localStorage.getItem('findo_user');
+            if (stored) {
+                currentUser = JSON.parse(stored);
+                updateNav();
             }
-
-            // Basic URL validation
-            if (!url.startsWith('http://') && !url.startsWith('https://') && !url.includes('.')) {
-                alert('Please enter a valid URL (e.g., https://example.com)');
-                return;
-            }
-
-            // Show loading state
-            checkBtn.disabled = true;
-            btnText.style.display = 'none';
-            btnLoading.style.display = 'inline-block';
-            resultDiv.style.display = 'none';
-
-            // Simulate checking delay
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            const analysis = analyzeUrl(url);
-
-            // Hide loading state
-            checkBtn.disabled = false;
-            btnText.style.display = 'inline';
-            btnLoading.style.display = 'none';
-
-            // Display results
-            displayResults(analysis);
+            loadProducts();
         }
 
-        function analyzeUrl(url) {
-            let score = 100; // Start at 100 and deduct points
-            const checks = [];
-            const warnings = [];
+        function updateNav() {
+            document.getElementById('navBtns').innerHTML = `
+                <button class="btn btn-outline" onclick="showPage('mystore')">My Store</button>
+                <button class="btn btn-outline" onclick="showPage('account')">Account</button>
+                <button class="btn btn-outline" onclick="logout()">Logout</button>
+            `;
+            document.getElementById('userName').textContent = `Welcome, ${currentUser.name}!`;
+        }
 
-            try {
-                const urlObj = new URL(url.startsWith('http') ? url : 'https://' + url);
-                const domain = urlObj.hostname;
-                const urlLower = url.toLowerCase();
-                const path = urlObj.pathname;
-                const params = urlObj.search;
-
-                // Check 1: HTTPS
-                const hasHttps = urlObj.protocol === 'https:';
-                
-                // Check for data URIs or javascript URIs (very dangerous!)
-                if (urlObj.protocol === 'data:' || urlObj.protocol === 'javascript:') {
-                    return {
-                        level: 'dangerous',
-                        explanation: 'EXTREME DANGER! This is not a normal web link. It uses a dangerous protocol that can execute malicious code. DO NOT CLICK THIS under any circumstances.',
-                        icon: '🚨',
-                        checks: [{
-                            icon: '✗',
-                            label: 'Protocol Type',
-                            value: 'Dangerous protocol detected',
-                            pass: false
-                        }],
-                        warnings: ['This link uses a data: or javascript: protocol which is extremely dangerous and commonly used in attacks.'],
-                        score: 0
-                    };
+        // Pages
+        function showPage(page) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            
+            if (page === 'home') {
+                document.getElementById('homePage').classList.add('active');
+                loadProducts();
+            } else if (page === 'mystore') {
+                if (!currentUser) {
+                    showNotification('Please login first!', 'error');
+                    showSignup();
+                    return;
                 }
-
-                // Common trusted domains (expanded list)
-                const trustedDomains = [
-                    'google.com', 'youtube.com', 'facebook.com', 'amazon.com', 'wikipedia.org',
-                    'twitter.com', 'x.com', 'instagram.com', 'linkedin.com', 'reddit.com', 'netflix.com',
-                    'microsoft.com', 'apple.com', 'github.com', 'stackoverflow.com', 'zoom.us',
-                    'dropbox.com', 'spotify.com', 'twitch.tv', 'ebay.com', 'paypal.com',
-                    'chase.com', 'wellsfargo.com', 'bankofamerica.com', 'citi.com', 'capitalone.com',
-                    'gmail.com', 'outlook.com', 'yahoo.com', 'icloud.com', 'protonmail.com',
-                    'nike.com', 'adidas.com', 'walmart.com', 'target.com', 'bestbuy.com', 
-                    'homedepot.com', 'lowes.com', 'costco.com', 'samsung.com', 'sony.com', 
-                    'dell.com', 'hp.com', 'adobe.com', 'salesforce.com', 'oracle.com', 'ibm.com',
-                    'discord.com', 'slack.com', 'notion.so', 'figma.com', 'canva.com',
-                    'airbnb.com', 'booking.com', 'expedia.com', 'uber.com', 'lyft.com',
-                    'w3schools.com', 'medium.com', 'substack.com', 'wordpress.com', 'blogger.com'
-                ];
-                
-                const domainParts = domain.split('.');
-                const mainDomain = domainParts.slice(-2).join('.');
-                const isTrustedDomain = trustedDomains.includes(mainDomain);
-                
-                // Check for shortened URLs (bit.ly, tinyurl, etc.) - these hide the real destination
-                const urlShorteners = [
-                    'bit.ly', 'tinyurl.com', 'goo.gl', 't.co', 'ow.ly', 'is.gd', 'buff.ly',
-                    'adf.ly', 'bitly.com', 'short.io', 'rebrand.ly', 'cutt.ly', 'tiny.cc',
-                    'shorturl.at', 'bl.ink', 's2r.co', 'clicky.me', 'budurl.com'
-                ];
-                
-                const isShortened = urlShorteners.some(shortener => domain.includes(shortener));
-                
-                if (isShortened) {
-                    checks.push({
-                        icon: '⚠',
-                        label: 'URL Shortener',
-                        value: 'Link is shortened (hides real destination)',
-                        pass: false
-                    });
-                    score -= 25;
-                    warnings.push('This is a shortened link (like bit.ly). You can\'t see where it actually goes, which scammers use to hide malicious sites.');
+                document.getElementById('myStorePage').classList.add('active');
+                loadMyProducts();
+            } else if (page === 'account') {
+                if (!currentUser) {
+                    showNotification('Please login first!', 'error');
+                    showSignup();
+                    return;
                 }
+                document.getElementById('accountPage').classList.add('active');
+                loadAccount();
+            }
+        }
 
-                checks.push({
-                    icon: hasHttps ? '✓' : '⚠',
-                    label: 'Secure Connection (HTTPS)',
-                    value: hasHttps ? 'Yes' : 'No (but may redirect)',
-                    pass: hasHttps
-                });
-                if (!hasHttps && !isTrustedDomain) {
-                    score -= 15;
-                    warnings.push('This link does not start with HTTPS. Some sites redirect to HTTPS automatically, but be cautious.');
-                }
+        // Auth
+        function showSignup() {
+            document.getElementById('authModal').classList.add('active');
+        }
 
-                // Check 2: Port numbers (suspicious if not 80, 443, or missing)
-                const hasPort = urlObj.port && urlObj.port !== '80' && urlObj.port !== '443';
-                if (hasPort) {
-                    checks.push({
-                        icon: '⚠',
-                        label: 'Non-Standard Port',
-                        value: `Uses port ${urlObj.port}`,
-                        pass: false
-                    });
-                    score -= 20;
-                    warnings.push(`This link uses an unusual port number (${urlObj.port}). Legitimate websites rarely do this.`);
-                }
-
-                // Check 3: IP address check
-                const isIpAddress = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(domain);
-                
-                // Check for lookalike characters (homograph attacks)
-                const hasLookalikeChars = /[а-яА-Я]/.test(domain) || // Cyrillic
-                                          /[α-ωΑ-Ω]/.test(domain) || // Greek
-                                          /[ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹ]/.test(domain); // Roman numerals
-                
-                // Check for excessive hyphens or underscores
-                const tooManyHyphens = (domain.match(/-/g) || []).length > 3;
-                const hasUnderscore = domain.includes('_');
-                
-                // Check for typosquatting
-                let possibleTyposquat = false;
-                if (!isTrustedDomain) {
-                    const domainName = domainParts[Math.max(0, domainParts.length - 2)];
-                    for (const trusted of trustedDomains) {
-                        const trustedName = trusted.split('.')[0];
-                        
-                        if (domainName && domainName !== trustedName) {
-                            // Check various typosquatting patterns
-                            if (domainName.includes(trustedName) || 
-                                domainName.includes(trustedName.replace('o', '0')) ||
-                                domainName.includes(trustedName.replace('l', '1')) ||
-                                domainName.includes(trustedName.replace('i', '1')) ||
-                                domainName.includes(trustedName.replace('e', '3')) ||
-                                domainName.replace(/[o0]/g, 'O').replace(/[l1i]/g, 'L') === 
-                                trustedName.replace(/[o0]/g, 'O').replace(/[l1i]/g, 'L')) {
-                                possibleTyposquat = true;
-                                break;
-                            }
-                        }
-                    }
-                }
-                
-                if (isIpAddress) {
-                    checks.push({
-                        icon: '✗',
-                        label: 'Domain Type',
-                        value: 'IP Address (Very Suspicious)',
-                        pass: false
-                    });
-                    score -= 40;
-                    warnings.push('The link uses an IP address instead of a normal website name. This is very unusual and often used in scams.');
-                } else if (isTrustedDomain) {
-                    checks.push({
-                        icon: '✓',
-                        label: 'Domain Recognition',
-                        value: 'Well-known, trusted website',
-                        pass: true
-                    });
-                    score += 10;
-                } else if (hasLookalikeChars) {
-                    checks.push({
-                        icon: '✗',
-                        label: 'Domain Characters',
-                        value: 'Uses fake lookalike letters',
-                        pass: false
-                    });
-                    score -= 35;
-                    warnings.push('This domain uses special characters that look like normal letters but aren\'t (like using a Cyrillic "а" instead of Latin "a"). This is a common trick to fake legitimate websites.');
-                } else if (possibleTyposquat) {
-                    checks.push({
-                        icon: '⚠',
-                        label: 'Domain Similarity',
-                        value: 'Looks like a well-known brand',
-                        pass: false
-                    });
-                    score -= 30;
-                    warnings.push('This domain looks very similar to a popular website but isn\'t the real one. Examples: "g00gle.com" or "paypa1.com". This could be typosquatting.');
-                } else if (tooManyHyphens || hasUnderscore) {
-                    checks.push({
-                        icon: '⚠',
-                        label: 'Domain Format',
-                        value: 'Unusual punctuation in domain',
-                        pass: false
-                    });
-                    score -= 15;
-                    warnings.push('This domain has unusual punctuation (many hyphens or underscores), which is uncommon for legitimate sites.');
-                }
-
-                // Check 4: Suspicious file extensions in the URL
-                const dangerousExtensions = ['.exe', '.scr', '.bat', '.cmd', '.com', '.pif', '.vbs', '.js', '.jar', '.zip', '.rar', '.apk'];
-                const hasDangerousExtension = dangerousExtensions.some(ext => path.toLowerCase().endsWith(ext));
-                
-                if (hasDangerousExtension) {
-                    checks.push({
-                        icon: '✗',
-                        label: 'File Type',
-                        value: 'Downloads executable file',
-                        pass: false
-                    });
-                    score -= 35;
-                    warnings.push('This link appears to download an executable file (.exe, .bat, etc.). This is very dangerous and commonly used to spread malware. Never download files from untrusted sources.');
-                }
-
-                // Check 5: Suspicious patterns and brand impersonation
-                const suspiciousPatterns = [
-                    'login', 'signin', 'account', 'verify', 'secure', 'update', 'confirm',
-                    'suspended', 'locked', 'unusual', 'activity', 'urgent', 'alert', 'password',
-                    'billing', 'payment', 'refund', 'prize', 'winner', 'claim', 'expires'
-                ];
-                
-                const commonBrands = [
-                    'paypal', 'amazon', 'ebay', 'microsoft', 'apple', 'google', 
-                    'facebook', 'netflix', 'bank', 'chase', 'wellsfargo', 'citi',
-                    'fedex', 'ups', 'usps', 'dhl', 'irs', 'ssa'
-                ];
-
-                const hasSuspiciousWords = !isTrustedDomain && suspiciousPatterns.some(pattern => urlLower.includes(pattern));
-                const hasBrandImpersonation = !isTrustedDomain && commonBrands.some(brand => 
-                    urlLower.includes(brand) && !mainDomain.includes(brand)
-                );
-
-                const suspiciousContent = hasSuspiciousWords || hasBrandImpersonation;
-
-                checks.push({
-                    icon: suspiciousContent ? '✗' : '✓',
-                    label: 'Suspicious Content',
-                    value: suspiciousContent ? 'Warning signs detected' : 'No obvious red flags',
-                    pass: !suspiciousContent
-                });
-                
-                if (hasSuspiciousWords) {
-                    score -= 25;
-                    warnings.push('The link contains words like "login", "verify", "urgent", or "suspended" that scammers frequently use to create panic.');
-                }
-                
-                if (hasBrandImpersonation) {
-                    score -= 30;
-                    warnings.push('This link mentions a popular company name but the domain isn\'t actually from that company. This is a common phishing trick called brand impersonation.');
-                }
-
-                // Check 6: @ symbol in URL (can hide the real domain)
-                if (url.includes('@')) {
-                    checks.push({
-                        icon: '✗',
-                        label: 'URL Manipulation',
-                        value: 'Contains @ symbol (hides real domain)',
-                        pass: false
-                    });
-                    score -= 35;
-                    warnings.push('This URL contains an @ symbol, which can hide the real destination. For example: "https://google.com@evil.com" actually goes to evil.com, not google.com.');
-                }
-
-                // Check 7: Excessive dots or subdomains
-                const tooManyDots = (domain.match(/\./g) || []).length > 4;
-                if (tooManyDots) {
-                    checks.push({
-                        icon: '⚠',
-                        label: 'Domain Complexity',
-                        value: 'Too many subdomains',
-                        pass: false
-                    });
-                    score -= 15;
-                    warnings.push('This domain has an unusual number of subdomains (dots), which can be used to confuse people.');
-                }
-
-                // Check 8: URL complexity and obfuscation
-                const tooLong = url.length > 150;
-                const tooManySubdomains = domain.split('.').length > 4;
-                const hasWeirdCharacters = /[^\w\d\-\.\/\?\=\&\:\%\#]/.test(url);
-                const tooManyNumbers = (domain.match(/\d/g) || []).length > 5;
-                const hasDoubleSlash = url.includes('//') && !url.startsWith('http://') && !url.startsWith('https://');
-                
-                const complexUrl = tooLong || tooManySubdomains || hasWeirdCharacters || tooManyNumbers || hasDoubleSlash;
-
-                checks.push({
-                    icon: complexUrl ? '⚠' : '✓',
-                    label: 'URL Structure',
-                    value: complexUrl ? 'Overly complex or suspicious' : 'Normal',
-                    pass: !complexUrl
-                });
-                
-                if (complexUrl) {
-                    score -= 20;
-                    if (tooLong) warnings.push('The link is extremely long (over 150 characters), which can be used to hide malicious content or confuse users.');
-                    if (tooManySubdomains && !tooManyDots) warnings.push('The link has many subdomains, which is unusual for most legitimate websites.');
-                    if (tooManyNumbers) warnings.push('The domain contains many numbers, which is uncommon for legitimate sites (except some CDNs).');
-                    if (hasDoubleSlash) warnings.push('The URL has unusual double slashes (//) which can be used for obfuscation.');
-                }
-
-                // Check 9: Suspicious query parameters
-                const suspiciousParams = ['redirect', 'url', 'next', 'return', 'goto', 'continue', 'redir'];
-                const hasSuspiciousParam = suspiciousParams.some(param => params.toLowerCase().includes(param + '='));
-                
-                if (hasSuspiciousParam && !isTrustedDomain) {
-                    checks.push({
-                        icon: '⚠',
-                        label: 'URL Parameters',
-                        value: 'Contains redirect parameters',
-                        pass: false
-                    });
-                    score -= 15;
-                    warnings.push('This URL has parameters that suggest it will redirect you somewhere else, which can be used to hide the true destination.');
-                }
-
-                // Check 10: Free hosting or suspicious TLDs
-                const suspiciousTLDs = ['.tk', '.ml', '.ga', '.cf', '.gq', '.xyz', '.top', '.club', '.work', '.click', '.link', '.download', '.loan', '.win', '.bid'];
-                const freeHosts = ['000webhostapp', 'netlify.app', 'github.io', 'blogspot', 'wordpress.com', 'wixsite', 'weebly', 'tripod', 'angelfire'];
-                
-                const hasSuspiciousTLD = suspiciousTLDs.some(tld => domain.endsWith(tld));
-                const isFreeHost = freeHosts.some(host => domain.includes(host));
-                
-                if (hasSuspiciousTLD || (isFreeHost && suspiciousContent)) {
-                    checks.push({
-                        icon: '⚠',
-                        label: 'Domain Reputation',
-                        value: hasSuspiciousTLD ? 'Uses suspicious domain extension' : 'Uses free hosting',
-                        pass: false
-                    });
-                    score -= 15;
-                    if (hasSuspiciousTLD) warnings.push('This link uses a domain extension (.tk, .xyz, .top, etc.) that is often free and commonly abused by scammers.');
-                    if (isFreeHost && suspiciousContent) warnings.push('This link uses free hosting combined with suspicious content, which is a red flag.');
-                }
-
-                // Determine safety level
-                let level, explanation, icon;
-                if (score >= 80) {
-                    level = 'safe';
-                    icon = '🛡️';
-                    explanation = 'This link appears relatively safe based on our analysis. It doesn\'t show obvious red flags. However, always verify you trust the source before clicking any link.';
-                } else if (score >= 50) {
-                    level = 'risky';
-                    icon = '⚠️';
-                    explanation = 'This link has multiple warning signs that make it suspicious. Be very careful! Only click if you absolutely trust who sent it and were expecting this link. When in doubt, don\'t click.';
+        function handleAuth(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            const email = formData.get('email');
+            const password = formData.get('password');
+            
+            // Check if user exists
+            const users = JSON.parse(localStorage.getItem('findo_users') || '[]');
+            const existing = users.find(u => u.email === email);
+            
+            if (existing) {
+                // Login
+                if (existing.password === password) {
+                    currentUser = existing;
+                    localStorage.setItem('findo_user', JSON.stringify(currentUser));
+                    showNotification('Welcome back!');
+                    updateNav();
+                    closeModal('authModal');
                 } else {
-                    level = 'dangerous';
-                    icon = '🚨';
-                    explanation = 'DANGER! This link shows multiple red flags that are common in scams and phishing attacks. We strongly recommend NOT clicking this link. If you got this in an email or text, it\'s very likely fake. Delete it immediately.';
+                    showNotification('Wrong password!', 'error');
                 }
-
-                return { level, explanation, icon, checks, warnings, score, urlDetails: {
-                    protocol: urlObj.protocol,
-                    domain: domain,
-                    fullDomain: domain,
-                    mainDomain: mainDomain,
-                    port: urlObj.port || 'default',
-                    path: path,
-                    params: params || 'none',
-                    tld: domainParts[domainParts.length - 1],
-                    subdomainCount: domainParts.length - 2,
-                    urlLength: url.length
-                } };
-
-            } catch (e) {
-                return {
-                    level: 'dangerous',
-                    explanation: 'This doesn\'t look like a valid web address. It might be typed incorrectly, or someone is trying to trick you with a fake link. Do not click this.',
-                    icon: '🚨',
-                    checks: [{
-                        icon: '✗',
-                        label: 'Valid URL',
-                        value: 'Not a valid link',
-                        pass: false
-                    }],
-                    warnings: ['This is not a properly formatted web link.'],
-                    score: 0
+            } else {
+                // Sign up
+                currentUser = {
+                    id: Date.now().toString(),
+                    name: formData.get('name'),
+                    email: email,
+                    password: password,
+                    createdAt: new Date().toISOString()
                 };
+                users.push(currentUser);
+                localStorage.setItem('findo_users', JSON.stringify(users));
+                localStorage.setItem('findo_user', JSON.stringify(currentUser));
+                showNotification('Account created!');
+                updateNav();
+                closeModal('authModal');
+            }
+            
+            e.target.reset();
+        }
+
+        function logout() {
+            if (confirm('Logout?')) {
+                localStorage.removeItem('findo_user');
+                currentUser = null;
+                location.reload();
             }
         }
 
-        function displayResults(analysis) {
-            const resultDiv = document.getElementById('result');
+        // Products
+        function loadProducts() {
+            allProducts = JSON.parse(localStorage.getItem('findo_products') || '[]');
+            const grid = document.getElementById('productsGrid');
             
-            const checksHtml = analysis.checks.map(check => `
-                <div class="check-item">
-                    <span class="check-icon">${check.icon}</span>
-                    <span class="check-label">${check.label}</span>
-                    <span class="check-value">${check.value}</span>
+            if (allProducts.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🏪</div>
+                        <h2>No Products Yet</h2>
+                        <p>Be the first to add a product!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = allProducts.map(p => `
+                <div class="product-card">
+                    <div class="product-image">${p.images && p.images[0] ? `<img src="${p.images[0]}">` : '📦'}</div>
+                    <div class="product-info">
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-price">$${p.price.toFixed(2)}</div>
+                        <div class="product-stock">${p.stock} in stock</div>
+                        <button class="btn-buy" onclick="contactSeller('${p.id}')">Contact Seller</button>
+                    </div>
                 </div>
             `).join('');
-
-            const warningsHtml = analysis.warnings.length > 0 ? `
-                <div class="warning-box">
-                    <p><strong>⚠️ Warning Signs Detected:</strong></p>
-                    ${analysis.warnings.map(w => `<p>• ${w}</p>`).join('')}
-                </div>
-            ` : '';
-            
-            // Add detailed technical breakdown
-            const technicalInfo = `
-                <div style="background: var(--bg-primary); padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem; border: 1px solid var(--border-color);">
-                    <p style="font-weight: 700; margin-bottom: 1rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
-                        <span>📊</span> Detailed Analysis Report
-                    </p>
-                    
-                    <div style="display: grid; gap: 0.75rem;">
-                        <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px;">
-                            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.25rem;">Safety Score</p>
-                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                <p style="font-size: 2rem; font-weight: 700; color: var(--text-primary);">${analysis.score}/100</p>
-                                <div style="flex: 1; height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden;">
-                                    <div style="height: 100%; width: ${analysis.score}%; background: ${analysis.score >= 80 ? 'var(--accent-safe)' : analysis.score >= 50 ? 'var(--accent-warning)' : 'var(--accent-danger)'}; transition: width 0.5s ease;"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        ${analysis.urlDetails ? `
-                            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px;">
-                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">URL Breakdown</p>
-                                <div style="font-family: 'Courier New', monospace; font-size: 0.85rem; color: var(--text-primary); word-break: break-all;">
-                                    <p style="margin-bottom: 0.25rem;"><span style="color: var(--text-secondary);">Protocol:</span> ${analysis.urlDetails.protocol}</p>
-                                    <p style="margin-bottom: 0.25rem;"><span style="color: var(--text-secondary);">Domain:</span> ${analysis.urlDetails.domain}</p>
-                                    ${analysis.urlDetails.port !== 'default' ? `<p style="margin-bottom: 0.25rem;"><span style="color: var(--text-secondary);">Port:</span> ${analysis.urlDetails.port}</p>` : ''}
-                                    ${analysis.urlDetails.path !== '/' ? `<p style="margin-bottom: 0.25rem;"><span style="color: var(--text-secondary);">Path:</span> ${analysis.urlDetails.path}</p>` : ''}
-                                    ${analysis.urlDetails.params !== 'none' ? `<p style="margin-bottom: 0.25rem;"><span style="color: var(--text-secondary);">Parameters:</span> ${analysis.urlDetails.params}</p>` : ''}
-                                </div>
-                            </div>
-                            
-                            <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px;">
-                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">Domain Information</p>
-                                <div style="font-size: 0.9rem; color: var(--text-primary);">
-                                    <p style="margin-bottom: 0.25rem;">• <strong>Full Domain:</strong> ${analysis.urlDetails.fullDomain}</p>
-                                    <p style="margin-bottom: 0.25rem;">• <strong>Main Domain:</strong> ${analysis.urlDetails.mainDomain}</p>
-                                    <p style="margin-bottom: 0.25rem;">• <strong>Subdomain Levels:</strong> ${analysis.urlDetails.subdomainCount}</p>
-                                    <p style="margin-bottom: 0.25rem;">• <strong>Top-Level Domain:</strong> .${analysis.urlDetails.tld}</p>
-                                    <p style="margin-bottom: 0.25rem;">• <strong>URL Length:</strong> ${analysis.urlDetails.urlLength} characters</p>
-                                </div>
-                            </div>
-                        ` : ''}
-                        
-                        <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px;">
-                            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">Risk Factors Found</p>
-                            <div style="font-size: 0.9rem; color: var(--text-primary);">
-                                <p style="margin-bottom: 0.25rem;">• <strong>Total Checks Run:</strong> ${analysis.checks.length}</p>
-                                <p style="margin-bottom: 0.25rem;">• <strong>Passed:</strong> <span style="color: var(--accent-safe);">${analysis.checks.filter(c => c.pass).length}</span></p>
-                                <p style="margin-bottom: 0.25rem;">• <strong>Failed:</strong> <span style="color: var(--accent-danger);">${analysis.checks.filter(c => !c.pass).length}</span></p>
-                                <p style="margin-bottom: 0.25rem;">• <strong>Warnings Issued:</strong> ${analysis.warnings.length}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            resultDiv.innerHTML = `
-                <div class="result-container">
-                    <div class="result-badge ${analysis.level}">
-                        <span class="result-icon">${analysis.icon}</span>
-                        <span>${analysis.level.toUpperCase()}</span>
-                    </div>
-                    
-                    <div class="explanation ${analysis.level}">
-                        <p>${analysis.explanation}</p>
-                    </div>
-
-                    <ul class="checks-list">
-                        ${checksHtml}
-                    </ul>
-
-                    ${warningsHtml}
-                    
-                    ${technicalInfo}
-                    
-                    <div style="background: var(--bg-primary); padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem; border: 1px solid var(--border-color);">
-                        <p style="font-weight: 700; margin-bottom: 0.75rem; color: var(--text-primary);">💡 What You Should Do Next:</p>
-                        <ul style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; padding-left: 1.5rem; margin: 0;">
-                            ${analysis.level === 'safe' ? `
-                                <li>This link appears relatively safe, but still verify the sender</li>
-                                <li>Make sure you're expecting this link before clicking</li>
-                                <li>Look for the padlock icon when the page loads</li>
-                                <li>Never enter sensitive information if anything seems suspicious</li>
-                            ` : analysis.level === 'risky' ? `
-                                <li><strong>Be very cautious</strong> - only proceed if you trust the source</li>
-                                <li>Verify with the sender through a different communication method</li>
-                                <li>Do NOT enter passwords, credit cards, or personal information</li>
-                                <li>Consider contacting the company directly using their official website</li>
-                            ` : `
-                                <li><strong>DO NOT CLICK THIS LINK</strong></li>
-                                <li>Delete the message or email containing this link</li>
-                                <li>If you clicked it, do NOT enter any information</li>
-                                <li>Run an antivirus scan if you downloaded anything</li>
-                                <li>Report the link to the platform where you received it</li>
-                            `}
-                        </ul>
-                    </div>
-                    
-                    <div style="background: var(--bg-primary); padding: 1.5rem; border-radius: 12px; margin-top: 1.5rem; border: 1px solid var(--border-color);">
-                        <p style="font-weight: 700; margin-bottom: 0.75rem; color: var(--text-primary);">🎓 Learn More About This Check:</p>
-                        <details style="color: var(--text-secondary); font-size: 0.9rem; cursor: pointer;">
-                            <summary style="color: var(--text-primary); font-weight: 500; margin-bottom: 0.5rem; user-select: none;">How does this tool analyze links?</summary>
-                            <p style="line-height: 1.6; margin-top: 0.5rem;">
-                                This tool examines multiple aspects of a URL including: the protocol (http/https), domain structure, presence of suspicious keywords, URL length and complexity, file types, character encoding, and comparison against known patterns used in scams. It checks for over 15 different risk factors and combines them into a safety score.
-                            </p>
-                        </details>
-                        <details style="color: var(--text-secondary); font-size: 0.9rem; cursor: pointer; margin-top: 0.75rem;">
-                            <summary style="color: var(--text-primary); font-weight: 500; margin-bottom: 0.5rem; user-select: none;">What are common scam tactics this detects?</summary>
-                            <p style="line-height: 1.6; margin-top: 0.5rem;">
-                                • <strong>Typosquatting:</strong> Domains that look similar to real sites (g00gle.com, paypa1.com)<br>
-                                • <strong>Homograph attacks:</strong> Using foreign characters that look like English letters<br>
-                                • <strong>URL hiding:</strong> Using @ symbols or shortened URLs to disguise the real destination<br>
-                                • <strong>Suspicious keywords:</strong> Words like "verify", "suspended", "urgent" to create panic<br>
-                                • <strong>Fake file downloads:</strong> .exe files pretending to be documents<br>
-                                • <strong>Brand impersonation:</strong> Mentioning PayPal/Amazon on non-official domains
-                            </p>
-                        </details>
-                        <details style="color: var(--text-secondary); font-size: 0.9rem; cursor: pointer; margin-top: 0.75rem;">
-                            <summary style="color: var(--text-primary); font-weight: 500; margin-bottom: 0.5rem; user-select: none;">What are the tool's limitations?</summary>
-                            <p style="line-height: 1.6; margin-top: 0.5rem;">
-                                This tool can't detect every scam because: (1) Brand new scam sites created today won't be in any database, (2) Sophisticated phishing can use legitimate-looking domains, (3) Real websites can get hacked and used for scams, (4) Browser limitations prevent us from actually visiting sites or checking security certificates in depth, (5) It can't evaluate the actual content or behavior of a webpage. Always use multiple security measures!
-                            </p>
-                        </details>
-                    </div>
-                </div>
-            `;
-
-            resultDiv.style.display = 'block';
-            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
-        // Enable/disable input based on agreement checkbox
-        document.getElementById('agree-checkbox').addEventListener('change', function(e) {
-            const input = document.getElementById('url-input');
-            const btn = document.getElementById('check-btn');
+        function loadMyProducts() {
+            if (!currentUser) return;
             
-            if (e.target.checked) {
-                input.disabled = false;
-                btn.disabled = false;
-                input.focus();
-            } else {
-                input.disabled = true;
-                btn.disabled = true;
+            const myProducts = allProducts.filter(p => p.userId === currentUser.id);
+            const grid = document.getElementById('myProductsGrid');
+            
+            if (myProducts.length === 0) {
+                grid.innerHTML = '<div class="empty-state"><p>Add your first product!</p></div>';
+                return;
             }
-        });
+            
+            grid.innerHTML = myProducts.map(p => `
+                <div class="product-card">
+                    <div class="product-image">${p.images && p.images[0] ? `<img src="${p.images[0]}">` : '📦'}</div>
+                    <div class="product-info">
+                        <div class="product-name">${p.name}</div>
+                        <div class="product-price">$${p.price.toFixed(2)}</div>
+                        <div class="product-stock">${p.stock} in stock</div>
+                        <button class="btn-sold" onclick="sellProduct('${p.id}')">✓ SOLD</button>
+                        <button class="btn-delete" onclick="deleteProduct('${p.id}')">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-        // Allow Enter key to submit
-        document.getElementById('url-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                checkLink();
+        function showAddProduct() {
+            if (!currentUser) {
+                showNotification('Please login first!', 'error');
+                showSignup();
+                return;
             }
-        });
+            document.getElementById('addProductModal').classList.add('active');
+        }
+
+        function handleAddProduct(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            
+            const product = {
+                id: Date.now().toString(),
+                userId: currentUser.id,
+                userName: currentUser.name,
+                name: formData.get('name'),
+                description: formData.get('description'),
+                price: parseFloat(formData.get('price')),
+                stock: parseInt(formData.get('stock')),
+                category: formData.get('category'),
+                createdAt: new Date().toISOString()
+            };
+            
+            allProducts.push(product);
+            localStorage.setItem('findo_products', JSON.stringify(allProducts));
+            
+            showNotification('Product added!');
+            closeModal('addProductModal');
+            e.target.reset();
+            loadMyProducts();
+        }
+
+        function sellProduct(id) {
+            const product = allProducts.find(p => p.id === id);
+            if (!product) return;
+            
+            const qty = parseInt(prompt(`How many did you sell? (Available: ${product.stock})`));
+            
+            if (!qty || qty < 1 || qty > product.stock) {
+                showNotification('Invalid quantity!', 'error');
+                return;
+            }
+            
+            product.stock -= qty;
+            localStorage.setItem('findo_products', JSON.stringify(allProducts));
+            
+            showNotification(`Sold ${qty}! Stock: ${product.stock} remaining.`);
+            loadMyProducts();
+        }
+
+        function deleteProduct(id) {
+            if (!confirm('Delete this product?')) return;
+            
+            allProducts = allProducts.filter(p => p.id !== id);
+            localStorage.setItem('findo_products', JSON.stringify(allProducts));
+            
+            showNotification('Product deleted!');
+            loadMyProducts();
+        }
+
+        function contactSeller(id) {
+            showNotification('Contact feature coming soon!');
+        }
+
+        function loadAccount() {
+            const myProducts = allProducts.filter(p => p.userId === currentUser.id);
+            document.getElementById('userProducts').textContent = myProducts.length;
+        }
+
+        // Modals
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        // Notifications
+        function showNotification(msg, type = 'success') {
+            const notif = document.getElementById('notification');
+            notif.textContent = msg;
+            notif.className = `notification show ${type}`;
+            setTimeout(() => notif.classList.remove('show'), 3000);
+        }
+
+        // Initialize
+        init();
     </script>
 </body>
 </html>
